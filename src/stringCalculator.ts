@@ -1,7 +1,27 @@
 export class StringCalculator {
     add = function (strNos: string) {
 
-        const delim =  /[\s,]+/;
+        const fNline = strNos.indexOf('\n'); 
+
+        let customDelim = '';
+
+        if(fNline !== -1){
+          let fLine = strNos.substring(0,fNline);
+    
+          if(fLine.substring(0,2) === '//'){
+            customDelim = fLine.substring(2);
+            strNos = strNos.substring(fNline+1)
+          }
+          
+        }
+    
+        if (!customDelim && /[\s,]{2,}/.test(strNos)) {
+          throw new Error(
+            "Invalid input: Consecutive spaces, new lines, or commas found."
+          );
+        }
+    
+        const delim = customDelim ? customDelim : /[\s,]+/;
     
         const numbers = strNos.split(delim).map((numStr) => {
           const num = Number(numStr);
