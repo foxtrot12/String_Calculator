@@ -5,6 +5,15 @@ export class StringCalculator {
     
         const numbers = strNos.split(delim).map((numStr) => {
           const num = Number(numStr);
+
+          if (isNaN(num)) throw new Error(
+            `Invalid input: one of the elements - ${numStr} is not a valid number`
+          );
+    
+          if (num < 0) throw new Error(
+            `Invalid input: one of the elements - ${num} is a negative number`
+          );
+
           return num
         });
     
